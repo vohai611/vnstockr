@@ -21,3 +21,5 @@ Imports:
     magrittr,
     readr,
     rvest
+URL: https://github.com/vohai611/vnstockr
+BugReports: https://github.com/vohai611/vnstockr/issues
