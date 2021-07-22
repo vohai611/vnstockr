@@ -16,6 +16,11 @@ get_vndirect <- function(symbol, start_date = NULL, end_date = NULL) {
   size <- as.double(end_date - start_date)
 
   url <- "https://finfo-api.vndirect.com.vn"
+
+  # to close url after leaving function
+  on.exit(close(url(url, 'rb')), add = TRUE)
+
+
  # path <- glue::glue("/v4/stock_prices?sort=date&q=code:{symbol}~date:gte:{start_date}~date:lte:{end_date}&size={size}&page=1")
   path <- paste0("/v4/stock_prices?sort=date&q=code:",symbol,"~date:gte:", start_date, "~date:lte:", end_date, "&size=",size,"&page=1")
 
@@ -23,8 +28,6 @@ get_vndirect <- function(symbol, start_date = NULL, end_date = NULL) {
     httr::GET() %>%
     httr::content(as = "text", encoding = "UTF-8") %>%
     jsonlite::fromJSON()
-
-  on.exit(closeAllConnections())
 
   get_result$data %>%
     dplyr::as_tibble() %>%

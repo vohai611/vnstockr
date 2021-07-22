@@ -8,8 +8,6 @@
 #' @return A tibble contain all stock data in that period
 #' @export
 #' @importFrom magrittr %>%
-#' @examples
-#' get_cafeF('ACB', "1/1/2020", "1/2/2020")
 #' @import dplyr
 
 
@@ -63,6 +61,9 @@ get_cafeF <- function(symbol, start_date, end_date) {
   result <-  furrr::future_map_dfr(seq_len(total_page),
                                    ~ get_page(symbol, start_date, end_date, .x),
                                    .progress = TRUE)
-  on.exit(closeAllConnections())
+
+  # to close connection after leave function
+  on.exit(close(url(link, 'rb')), add = TRUE)
+
   return(result)
 }

@@ -20,6 +20,3 @@ A tibble contain all stock data in that period
 get_cafeF() is normally slower then get_vndirect(), because it trying to scrape data instead of
 using the behind API
 }
-\examples{
-get_cafeF('ACB', "1/1/2020", "1/2/2020")
-}
