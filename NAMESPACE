@@ -3,5 +3,5 @@
 export(get_cafeF)
 export(get_vndirect)
 import(dplyr)
+import(lubridate)
 importFrom(lubridate,dmy)
-importFrom(magrittr,"%>%")

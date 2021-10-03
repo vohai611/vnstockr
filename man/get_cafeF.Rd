@@ -4,7 +4,7 @@
 \alias{get_cafeF}
 \title{Get stock data from cafef.vn}
 \usage{
-get_cafeF(symbol, start_date, end_date)
+get_cafeF(symbol, start_date = NULL, end_date = NULL)
 }
 \arguments{
 \item{symbol}{the code of stock, for example 'VCB', 'ACB'}

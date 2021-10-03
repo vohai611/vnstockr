@@ -7,12 +7,20 @@
 #' @param end_date the end date, in the form DD/MM/YYYY
 #' @return A tibble contain all stock data in that period
 #' @export
-#' @importFrom magrittr %>%
 #' @import dplyr
+#' @import lubridate
 
 
+get_cafeF <- function(symbol, start_date = NULL , end_date = NULL) {
 
-get_cafeF <- function(symbol, start_date, end_date) {
+  # set default argument
+  if(is.null(start_date)) start_date = format(today()-15, "%d-%m-%Y")
+  if(is.null(end_date)) end_date = format(today(), "%d-%m-%Y")
+
+  # check valid time
+  if(dmy(end_date) - dmy(start_date) <= 0) {
+    stop("end_date must be after start_date")
+  }
 
   ngay <- NULL
   link <- "https://s.cafef.vn/Lich-su-giao-dich-VNG-1.chn"
@@ -23,9 +31,10 @@ get_cafeF <- function(symbol, start_date, end_date) {
   form <- form[[1]]
 
   result_row <-
-    sum(!lubridate::wday(seq(
-      lubridate::dmy(start_date), lubridate::dmy(end_date), by = "day"
+    sum(!wday(seq(
+      dmy(start_date), dmy(end_date), by = "day"
     )) %in% c(1, 7))
+
   total_page <- result_row %/% 20 + 1
 
   get_page <- function(symbol, start_date , end_date , page) {
@@ -57,10 +66,11 @@ get_cafeF <- function(symbol, start_date, end_date) {
       mutate(across(-ngay, readr::parse_number))
   }
 
-  future::plan(future::multisession, workers = 4)
+  future::plan(future::multisession, workers = future::availableCores()-1)
   result <-  furrr::future_map_dfr(seq_len(total_page),
                                    ~ get_page(symbol, start_date, end_date, .x),
                                    .progress = TRUE)
+
 
   # to close connection after leave function
   on.exit(close(url(link, 'rb')), add = TRUE)
