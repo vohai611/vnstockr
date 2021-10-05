@@ -25,11 +25,6 @@ get_cafeF <- function(symbol, start_date = NULL , end_date = NULL) {
   ngay <- NULL
   link <- "https://s.cafef.vn/Lich-su-giao-dich-VNG-1.chn"
 
-  form <- rvest::read_html(link) %>%
-    rvest::html_form()
-
-  form <- form[[1]]
-
   result_row <-
     sum(!wday(seq(
       dmy(start_date), dmy(end_date), by = "day"
@@ -48,8 +43,8 @@ get_cafeF <- function(symbol, start_date = NULL , end_date = NULL) {
         `ctl00$UcFooter2$hdIP` = NULL,
         `__EVENTTARGET` =  "ctl00$ContentPlaceHolder1$ctl03$pager2",
         `__EVENTARGUMENT` = page,
-        `__VIEWSTATE` = form$fields$`__VIEWSTATE`$value,
-        `__VIEWSTATEGENERATOR` = form$fields$`__VIEWSTATEGENERATOR`$value,
+        `__VIEWSTATE` = form_cafef$fields$`__VIEWSTATE`$value,
+        `__VIEWSTATEGENERATOR` = form_cafef$fields$`__VIEWSTATEGENERATOR`$value,
         `__ASYNCPOST:` = "true"
       )
     )

@@ -14,7 +14,6 @@
 get_cafeF2 = function(symbol, start_date = NULL, end_date = NULL) {
   . = NULL
   ngay = NULL
-  load("R/sysdata.rda")
   # set default argument
   if(is.null(start_date)) start_date = format(today()-15, "%d-%m-%Y")
   if(is.null(end_date)) end_date = format(today(), "%d-%m-%Y")
