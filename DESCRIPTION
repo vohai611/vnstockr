@@ -2,8 +2,7 @@ Package: vnstockr
 Type: Package
 Title: Retrieve Vietnam stock price
 Version: 0.1.0
-Author: Hai Ngoc Vo 
-Maintainer: The package maintainer <hai835559@gmail.com>
+Authors@R: person("Hai", "Vo", role = c("aut", "cre", "cph"), email ="hai835559@gmail.com")
 Description: Data retrieve form vndirect and cafef.
 License: MIT + file LICENSE
 Encoding: UTF-8
